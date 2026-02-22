@@ -4,6 +4,8 @@ services:
     build:
       context: .
     image: docker-tui:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   redis:
     image: redis:alpine

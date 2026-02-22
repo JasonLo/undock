@@ -1,0 +1,4 @@
+STYLE_COMPOSE_RUNNING: str = "green"
+STYLE_COMPOSE_STOPPED: str = "yellow"
+STYLE_OTHER_RUNNING: str = "grey70"
+STYLE_OTHER_STOPPED: str = "grey42"
