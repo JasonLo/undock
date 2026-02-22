@@ -1,0 +1,5 @@
+# Use LF for all text files
+* text=auto eol=lf
+
+# Treat lock files as text but perhaps use a different merge strategy
+uv.lock text merge=binary

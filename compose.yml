@@ -1,0 +1,26 @@
+services:
+  app:
+    container_name: docker-tui
+    build:
+      context: .
+    image: docker-tui:latest
+
+  redis:
+    image: redis:alpine
+    container_name: test-redis
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:alpine
+    container_name: test-postgres
+    environment:
+      POSTGRES_PASSWORD: testpass
+    ports:
+      - "5432:5432"
+
+  nginx:
+    image: nginx:alpine
+    container_name: test-nginx
+    ports:
+      - "8080:80"
