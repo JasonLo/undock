@@ -20,6 +20,10 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-root = "."
 
+[tool.uv.tasks]
+# Use sh -c to handle the argument $1
+release = 'sh -c "uv version $1 && git tag -a v$1 -m v$1 && git push --tags" --'
+
 [dependency-groups]
 dev = [
     "pytest>=9.0.2",
