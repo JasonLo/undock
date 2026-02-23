@@ -1,5 +1,5 @@
 [project]
-name = "docker-tui"
+name = "Undock"
 version = "0.1.0"
 authors = [
     { name = "Jason Lo", email = "lcmjlo@gmail.com" }

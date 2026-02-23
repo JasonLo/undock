@@ -22,8 +22,8 @@ from docker_tui.widgets import ContainerTable, LogPanel, ResizeHandle
 logger = logging.getLogger(__name__)
 
 
-class DockerTUI(App[None]):
-    TITLE: str = "docker-tui"
+class UndockTUI(App[None]):
+    TITLE: str = "undock"
     BINDINGS: list[Binding] = [
         Binding("l", "toggle_logs", "Toggle Logs"),
         Binding("q", "quit", "Quit"),
@@ -206,11 +206,11 @@ class DockerTUI(App[None]):
 
 def main() -> None:
     logging.basicConfig(
-        filename="docker-tui.log",
+        filename="undock.log",
         level=logging.DEBUG,
         format="%(asctime)s %(levelname)-8s %(name)s: %(message)s",
     )
-    DockerTUI().run()
+    UndockTUI().run()
 
 
 if __name__ == "__main__":

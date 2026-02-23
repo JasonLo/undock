@@ -1,9 +1,9 @@
 services:
   app:
-    container_name: docker-tui
+    container_name: undock
     build:
       context: .
-    image: docker-tui:latest
+    image: undock:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
