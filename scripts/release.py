@@ -103,8 +103,8 @@ def main(
 
         # Phase 2: Bump
         console.print(f"🚀 [blue]Bumping version ({increment.value})...[/blue]")
-        run(["uv", "version", "--bump", increment.value], capture=False)
-        new_version: str = run(["uv", "version", "--short"])
+        run(["uv", "version", "--bump", increment.value, "--active"], capture=False)
+        new_version: str = run(["uv", "version", "--short", "--active"])
         tag_name: str = f"v{new_version}"
 
         # Phase 3: Commit and Tag
