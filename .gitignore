@@ -13,3 +13,4 @@ nohup.out
 tmp.ipynb
 .DS_Store
 .claude/settings.local.json
+uv.lock

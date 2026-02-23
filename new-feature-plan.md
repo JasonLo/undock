@@ -6,11 +6,11 @@ The app currently uses `docker.from_env()` everywhere, which relies on the syste
 
 ## Approach
 
-1. Create `docker_tui/context.py` — context data model, `.env` I/O, `docker context ls` integration
-2. Create `docker_tui/widgets/context_modal.py` — `ModalScreen` for picking a context
-3. Modify `docker_tui/docker_client.py` — make all Docker calls accept context endpoint
-4. Modify `docker_tui/app.py` — load context at startup, add `c` binding, wire endpoint into workers
-5. Modify `docker_tui/widgets/__init__.py` — export `ContextModal`
+1. Create `undock/context.py` — context data model, `.env` I/O, `docker context ls` integration
+2. Create `undock/widgets/context_modal.py` — `ModalScreen` for picking a context
+3. Modify `undock/docker_client.py` — make all Docker calls accept context endpoint
+4. Modify `undock/app.py` — load context at startup, add `c` binding, wire endpoint into workers
+5. Modify `undock/widgets/__init__.py` — export `ContextModal`
 
 No new dependencies needed. `.env` is parsed with stdlib only.
 
@@ -18,13 +18,13 @@ No new dependencies needed. `.env` is parsed with stdlib only.
 
 ## Critical Files
 
-- `docker_tui/app.py` — main app class (line 57: `docker.from_env()`, line 122: `get_container_logs`, lines 153/167/179: subprocess workers)
-- `docker_tui/docker_client.py` — `get_container_logs` (line 142), `run_compose_up` (line 164), `run_stop_container` (line 174)
-- `docker_tui/widgets/__init__.py` — add `ContextModal` export
+- `undock/app.py` — main app class (line 57: `docker.from_env()`, line 122: `get_container_logs`, lines 153/167/179: subprocess workers)
+- `undock/docker_client.py` — `get_container_logs` (line 142), `run_compose_up` (line 164), `run_stop_container` (line 174)
+- `undock/widgets/__init__.py` — add `ContextModal` export
 
 ---
 
-## New File: `docker_tui/context.py`
+## New File: `undock/context.py`
 
 ```python
 from __future__ import annotations
@@ -134,7 +134,7 @@ def resolve_active_context(all_contexts: list[DockerContext]) -> DockerContext |
 
 ---
 
-## New File: `docker_tui/widgets/context_modal.py`
+## New File: `undock/widgets/context_modal.py`
 
 ```python
 from __future__ import annotations
@@ -144,7 +144,7 @@ from textual.containers import Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Label, OptionList
 from textual.widgets.option_list import Option
-from docker_tui.context import DockerContext
+from undock.context import DockerContext
 
 
 class ContextModal(ModalScreen[DockerContext | None]):
@@ -190,7 +190,7 @@ class ContextModal(ModalScreen[DockerContext | None]):
 
 ---
 
-## Changes to `docker_tui/docker_client.py`
+## Changes to `undock/docker_client.py`
 
 **`get_container_logs`** — add `base_url` and `use_ssh_client` params:
 ```python
@@ -238,12 +238,12 @@ def run_stop_container(
 
 ---
 
-## Changes to `docker_tui/app.py`
+## Changes to `undock/app.py`
 
 **New imports:**
 ```python
-from docker_tui.context import DockerContext, list_contexts, resolve_active_context, save_context_to_env
-from docker_tui.widgets.context_modal import ContextModal
+from undock.context import DockerContext, list_contexts, resolve_active_context, save_context_to_env
+from undock.widgets.context_modal import ContextModal
 ```
 
 **Add binding:**
@@ -331,13 +331,13 @@ result = run_compose_up(None, extra_flags, docker_host=docker_host)
 
 ---
 
-## Changes to `docker_tui/widgets/__init__.py`
+## Changes to `undock/widgets/__init__.py`
 
 ```python
-from docker_tui.widgets.container_table import ContainerTable
-from docker_tui.widgets.context_modal import ContextModal
-from docker_tui.widgets.log_panel import LogPanel
-from docker_tui.widgets.resize_handle import ResizeHandle
+from undock.widgets.container_table import ContainerTable
+from undock.widgets.context_modal import ContextModal
+from undock.widgets.log_panel import LogPanel
+from undock.widgets.resize_handle import ResizeHandle
 
 __all__ = ["ContainerTable", "ContextModal", "LogPanel", "ResizeHandle"]
 ```
@@ -388,7 +388,7 @@ Created/updated automatically on context switch. Parsed on startup. All other ke
 
 ## Verification
 
-1. Run `uv run docker_tui` — subtitle should show the active context name (or be blank if no contexts)
+1. Run `uv run undock` — subtitle should show the active context name (or be blank if no contexts)
 2. Press `c` — modal opens showing all Docker contexts from `docker context ls`
 3. Select a remote context (e.g., `bear-dev`) — subtitle updates, container list reloads from remote daemon
 4. Quit and re-launch — `.env` file has `DOCKER_CONTEXT=bear-dev`, app reconnects to same context

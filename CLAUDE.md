@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 uv sync --group dev
 
 # Run the application
-uv run docker_tui
+uv run undock
 
 # Lint
 uv run ruff check .
@@ -37,7 +37,7 @@ docker compose up
 
 A Python TUI application for managing Docker containers.
 
-- **`docker_tui/app.py`** — Main entry point (`main()` function), registered as the `docker_tui` CLI script. Contains the textual `App` class and all UI logic.
+- **`undock/app.py`** — Main entry point (`main()` function), registered as the `undock` CLI script. Contains the textual `App` class and all UI logic.
 - **Framework**: [textual](https://textual.textualize.io/) for the TUI.
 - **Docker integration**: Uses the `docker` Python SDK to communicate with the Docker daemon, and `pyyaml` to parse compose files.
 

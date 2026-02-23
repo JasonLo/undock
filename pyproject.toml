@@ -26,4 +26,4 @@ dev = [
 ]
 
 [project.scripts]
-docker_tui = "docker_tui.app:main"
+undock = "undock.app:main"
