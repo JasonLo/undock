@@ -5,6 +5,7 @@
 #     "rich>=13.0.0",
 # ]
 # ///
+import os
 import subprocess
 import sys
 from enum import Enum
@@ -17,6 +18,11 @@ from rich.console import Console
 console = Console()
 app = typer.Typer(help="Safe release manager for uv projects.")
 
+# When this script runs via `uv run`, VIRTUAL_ENV is set to the script's
+# isolated cache environment. Strip it so `uv version` targets the project's
+# own .venv instead of installing everything into the cache env.
+_UV_ENV = {k: v for k, v in os.environ.items() if k != "VIRTUAL_ENV"}
+
 
 class Increment(str, Enum):
     major = "major"
@@ -28,10 +34,10 @@ class ReleaseError(Exception):
     pass
 
 
-def run(cmd: list[str], capture: bool = True) -> str:
+def run(cmd: list[str], capture: bool = True, env: dict[str, str] | None = None) -> str:
     """Run a command and return output, raising ReleaseError on failure."""
     try:
-        result = subprocess.run(cmd, capture_output=capture, text=True, check=True)
+        result = subprocess.run(cmd, capture_output=capture, text=True, check=True, env=env)
         return result.stdout.strip() if capture else ""
     except subprocess.CalledProcessError as e:
         console.print(f"[bold red]Error running {' '.join(cmd)}[/bold red]")
@@ -103,8 +109,8 @@ def main(
 
         # Phase 2: Bump
         console.print(f"🚀 [blue]Bumping version ({increment.value})...[/blue]")
-        run(["uv", "version", "--bump", increment.value, "--active"], capture=False)
-        new_version: str = run(["uv", "version", "--short", "--active"])
+        run(["uv", "version", "--bump", increment.value], capture=False, env=_UV_ENV)
+        new_version: str = run(["uv", "version", "--short"], env=_UV_ENV)
         tag_name: str = f"v{new_version}"
 
         # Phase 3: Commit and Tag
