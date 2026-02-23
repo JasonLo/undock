@@ -12,3 +12,9 @@ This is a terminal user interface (TUI) for managing Docker containers. It provi
 - textual
 - docker
 - pyyaml
+
+## Todos
+
+- [ ] docker context control
+- [ ] bugfix: when moving the cursor right after stopping a service, it will break
+- [ ] log panel: syntax highlighting, filtering, search.

@@ -1,12 +1,4 @@
 services:
-  app:
-    container_name: undock
-    build:
-      context: .
-    image: undock:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
   redis:
     image: redis:alpine
     container_name: test-redis

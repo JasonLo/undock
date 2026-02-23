@@ -1,5 +1,7 @@
 [project]
 name = "undock"
+description = "A terminal UI for managing Docker containers."
+license = "MIT"
 version = "0.1.1"
 authors = [
     { name = "Jason Lo", email = "lcmjlo@gmail.com" }
