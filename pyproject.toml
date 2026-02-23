@@ -2,7 +2,7 @@
 name = "undock"
 description = "A terminal UI for managing Docker containers."
 license = "MIT"
-version = "0.1.1"
+version = "0.1.2"
 authors = [
     { name = "Jason Lo", email = "lcmjlo@gmail.com" }
 ]
@@ -19,10 +19,6 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-root = "."
-
-[tool.uv.tasks]
-# Use sh -c to handle the argument $1
-release = 'sh -c "uv version $1 && git tag -a v$1 -m v$1 && git push --tags" --'
 
 [dependency-groups]
 dev = [
