@@ -8,8 +8,8 @@ from textual.binding import Binding
 from textual.containers import Horizontal
 from textual.widgets import DataTable, Footer, Header
 
-from docker_tui.compose import load_compose_services
-from docker_tui.docker_client import (
+from undock.compose import load_compose_services
+from undock.docker_client import (
     DockerClientError,
     fetch_container_rows,
     get_container_logs,
@@ -17,7 +17,7 @@ from docker_tui.docker_client import (
     run_compose_up,
     run_stop_container,
 )
-from docker_tui.widgets import ContainerTable, LogPanel, ResizeHandle
+from undock.widgets import ContainerTable, LogPanel, ResizeHandle
 
 logger = logging.getLogger(__name__)
 

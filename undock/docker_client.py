@@ -7,7 +7,7 @@ import docker.errors
 import docker.models.containers
 from rich.text import Text
 
-from docker_tui.config import (
+from undock.config import (
     STYLE_COMPOSE_RUNNING,
     STYLE_COMPOSE_STOPPED,
     STYLE_OTHER_RUNNING,
